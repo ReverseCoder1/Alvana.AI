@@ -20,7 +20,7 @@ const HomeView = () => {
                     router.push('/sign-in');
                 }
             }
-        })}>Sign Out</Button>
+        })} className="w-full">Sign Out</Button>
     </div>
   );
 }
