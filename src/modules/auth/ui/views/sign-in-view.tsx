@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { OctagonAlertIcon } from "lucide-react";
 import { authClient } from "@/lib/auth-client";
+import {FaGithub, FaGoogle} from "react-icons/fa";
 import {
   Form,
   FormControl,
@@ -17,8 +18,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Alert, AlertTitle } from "@/components/ui/alert";
 import { useForm } from "react-hook-form";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   email: z.string().email("Invalid email address"),
@@ -26,28 +27,49 @@ const formSchema = z.object({
 });
 
 export const SignInView = () => {
-    const router = useRouter();
-    const [error, setError] = useState<string | null>(null);
-    const [pending, setPending] = useState(false);
+  const router = useRouter();
+  const [error, setError] = useState<string | null>(null);
+  const [pending, setPending] = useState(false);
 
-    const onSubmit = (data: z.infer<typeof formSchema>) => {
-        setError(null);
-        setPending(true);
-        authClient.signIn.email({
-            email : data.email,
-            password : data.password,
+  const onSubmit = (data: z.infer<typeof formSchema>) => {
+    setError(null);
+    setPending(true);
+    authClient.signIn.email(
+      {
+        email: data.email,
+        password: data.password,
+        callbackURL: "/",
+      },
+      {
+        onSuccess: () => {
+          setPending(false);
+          router.push("/");
         },
-        {
-            onSuccess: () => {
-                setPending(false);
-                router.push("/");
-            },
-            onError: (error) => {
-                setError(error.error.message);
-            }
-    }
-        )
-    }
+        onError: (error) => {
+          setError(error.error.message);
+        },
+      }
+    );
+  };
+  const onSocial = (provider : "github" | "google") => {
+    setError(null);
+    setPending(true);
+    authClient.signIn.social(
+      {
+        provider: provider,
+        callbackURL: "/",
+      },
+      {
+        onSuccess: () => {
+          setPending(false);
+        },
+        onError: (error) => {
+          setPending(false);
+          setError(error.error.message);
+        },
+      }
+    );
+  };
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -113,18 +135,31 @@ export const SignInView = () => {
                   </span>
                 </div>
                 <div className="grid grid-cols-2 gap-4">
-                    <Button variant="outline" type="button" className="w-full">
-                        Google
-                    </Button>
-                    <Button variant="outline" type="button" className="w-full">
-                        Github
-                    </Button>
+                  <Button
+                    variant="outline"
+                    type="button"
+                    onClick={() => {onSocial("google")}}
+                    className="w-full"
+                  >
+                    <FaGoogle />
+                  </Button>
+                  <Button
+                    variant="outline"
+                    type="button"
+                    onClick={() => {onSocial("github")}}
+                    className="w-full"
+                  >
+                    <FaGithub />
+                  </Button>
                 </div>
                 <div className="text-center text-sm">
-                    Don&apos;t have an account?{" "}
-                    <Link href="/sign-up" className="underline underline-offset-4">
-                        Sign up
-                    </Link>
+                  Don&apos;t have an account?{" "}
+                  <Link
+                    href="/sign-up"
+                    className="underline underline-offset-4"
+                  >
+                    Sign up
+                  </Link>
                 </div>
               </div>
             </form>
@@ -137,7 +172,8 @@ export const SignInView = () => {
         </CardContent>
       </Card>
       <div className="text-muted-foreground *:[a]:hover:text-primary text-center text-xs text-balance *:[a]:underline *:[a]:underline-offset-4">
-        By clicking continue, you agree to our<a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>
+        By clicking continue, you agree to our<a href="#">Terms of Service</a>{" "}
+        and <a href="#">Privacy Policy</a>
       </div>
     </div>
   );
