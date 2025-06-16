@@ -2,7 +2,6 @@ import { db } from "@/db";
 import { agents } from "@/db/schema";
 import {
   createTRPCRouter,
-  baseProcedure,
   protectedProcedure,
 } from "@/trpc/init";
 import { agentsInputSchema } from "../schemas";
@@ -15,7 +14,6 @@ import {
   MIN_PAGE_SIZE,
 } from "@/constants";
 import { TRPCError } from "@trpc/server";
-import { uptime } from "process";
 
 export const agentsRouter = createTRPCRouter({
   update: protectedProcedure
