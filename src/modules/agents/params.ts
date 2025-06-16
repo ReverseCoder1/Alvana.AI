@@ -1,6 +1,7 @@
 import  { parseAsInteger, parseAsString, createLoader} from "nuqs/server"
 
 import { DEFAULT_PAGE } from "@/constants";
+import { z } from "zod";
 
 export const filterSearchParams = {
     search: parseAsString.withDefault("").withOptions({clearOnDefault: true}),
