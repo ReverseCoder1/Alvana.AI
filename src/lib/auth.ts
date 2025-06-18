@@ -5,6 +5,10 @@ import { db } from "@/db";
 import * as schema from "@/db/schema";
 
 export const auth = betterAuth({
+    allowedOrigins: [
+        "http://localhost:3000", // local dev
+        "https://moved-widely-firefly.ngrok-free.app" // your ngrok domain
+    ],
     socialProviders: {
         github: { 
             clientId: process.env.GITHUB_CLIENT_ID as string, 
