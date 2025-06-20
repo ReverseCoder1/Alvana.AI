@@ -15,6 +15,8 @@ import { GeneratedAvatar } from "@/components/generated-avatar";
 import { format } from "date-fns";
 import { Badge } from "@/components/ui/badge";
 import { formatDuration } from "@/lib/utils";
+import { Transcript } from "./transcript";
+import { ChatProvider } from "./chat-provider";
 interface CompletedStateProps {
   data: MeetingGetOne;
 }
@@ -110,12 +112,9 @@ export const CompletedState = ({ data }: CompletedStateProps) => {
             </div>
           </div>
         </TabsContent>
-        {/* <TabsContent value="transcript">
-            <div className="p-4">
-                <h2 className="text-lg font-semibold">Transcript</h2>
-                <p>{data.transcript}</p>
-            </div>
-        </TabsContent> */}
+        <TabsContent value="transcript">
+            <Transcript meetingId={data.id} />
+        </TabsContent>
         <TabsContent value="recording">
           <div className="bg-white rounded-lg border px-4 py-5">
             <video
@@ -125,12 +124,9 @@ export const CompletedState = ({ data }: CompletedStateProps) => {
             />
           </div>
         </TabsContent>
-        {/* <TabsContent value="chat">
-          <div className="p-4">
-            <h2 className="text-lg font-semibold">ASK AI</h2>
-            <p>{data.chat}</p>
-          </div>
-        </TabsContent> */}
+        <TabsContent value="chat">
+          <ChatProvider meetingId={data.id} meetingName={data.name} />
+        </TabsContent>
       </Tabs>
     </div>
   );
