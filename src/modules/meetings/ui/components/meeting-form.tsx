@@ -90,8 +90,8 @@ export const MeetingForm = ({
   const form = useForm<z.infer<typeof meetingsInputSchema>>({
     resolver: zodResolver(meetingsInputSchema),
     defaultValues: {
-      name: initialValues?.name ?? "",
-      agentId: initialValues?.agentId ?? "",
+      name: initialValues?.name || "",
+      agentId: initialValues?.agentId || "",
     },
   });
 
@@ -100,7 +100,7 @@ export const MeetingForm = ({
 
   const onSubmit = (values: z.infer<typeof meetingsInputSchema>) => {
     if (isEdit) {
-      updateMeeting.mutate({ ...values, id: initialValues?.id! });
+      updateMeeting.mutate({ ...values, id: initialValues.id });
     } else {
       createMeeting.mutate(values);
     }

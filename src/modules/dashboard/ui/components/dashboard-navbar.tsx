@@ -5,7 +5,6 @@ import { useSidebar } from "@/components/ui/sidebar";
 import {
   PanelLeftCloseIcon,
   PanelLeftIcon,
-  Search,
   SearchIcon,
 } from "lucide-react";
 import { DashboardCommand } from "./dashboard-command";

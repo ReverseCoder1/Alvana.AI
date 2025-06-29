@@ -1,7 +1,6 @@
 import { auth } from '@/lib/auth';
 import { polarClient } from '@/lib/polar';
 import { initTRPC, TRPCError } from '@trpc/server';
-import { imageOptimizer } from 'next/dist/server/image-optimizer';
 import { headers } from 'next/headers';
 import { cache } from 'react';
 import { db } from '@/db';

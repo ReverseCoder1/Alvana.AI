@@ -13,7 +13,6 @@ import { useRouter } from "next/navigation";
 import { useConfirm } from "../../hooks/use-confirm";
 import { UpdateMeetingDialog } from "../components/update-meeting-dialog";
 import { useState } from "react";
-import { is } from "drizzle-orm";
 import { UpcomingState } from "../components/upcoming-state";
 import { ActiveState } from "../components/active-state";
 import { CancelledState } from "../components/cancelled-state";
@@ -79,8 +78,6 @@ export const MeetingIdView = ({ meetingId }: Props) => {
         {isUpcoming && (
           <UpcomingState
             meetingId={meetingId}
-            onCancleMeeting={() => {}}
-            isCancelling={false}
           />
         )}
         {isActive && <ActiveState meetingId={meetingId} />}
