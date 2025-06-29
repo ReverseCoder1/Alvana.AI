@@ -104,6 +104,9 @@ export const CompletedState = ({ data }: CompletedStateProps) => {
                         p: (props) => (
                             <p className="mb-6 leading-relaxed" {...props} />
                         ),
+                        ul: (props) => <ul className="list-disc ml-6 mb-6" {...props} />,
+                        ol: (props) => <ol className="list-decimal ml-6 mb-6" {...props} />,
+                        li: (props) => <li className="mb-2" {...props} />,
                     }}
                 >
                     {data.summary || "No summary available."}
