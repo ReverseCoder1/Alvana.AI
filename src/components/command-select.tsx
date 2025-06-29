@@ -10,7 +10,6 @@ import {
     CommandItem,
     CommandResponsiveDialog,
   } from "@/components/ui/command";
-import { on } from "events";
 
 interface CommandSelectProps {
   options: Array<{

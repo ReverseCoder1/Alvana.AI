@@ -7,7 +7,7 @@ import {
     StreamVideoClient,
 } from '@stream-io/video-react-sdk';
 import { useMutation } from '@tanstack/react-query';
-import { use, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { LoaderIcon } from 'lucide-react';
 import { useTRPC } from '@/trpc/client';
 import "@stream-io/video-react-sdk/dist/css/styles.css";

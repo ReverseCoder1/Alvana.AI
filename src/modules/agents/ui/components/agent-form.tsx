@@ -39,18 +39,18 @@ export const AgentForm = ({
 
   const createAgent = useMutation(
     trpc.agents.create.mutationOptions({
-      onSuccess:async () => {
+      onSuccess: async () => {
         await queryClient.invalidateQueries(
-            trpc.agents.getMany.queryOptions({}),
+          trpc.agents.getMany.queryOptions({})
         );
         await queryClient.invalidateQueries(
-          trpc.premium.getFreeUsage.queryOptions(),
+          trpc.premium.getFreeUsage.queryOptions()
         );
         onSuccess?.();
       },
       onError: (error) => {
         toast.error(error.message);
-        if(error.data?.code === "FORBIDDEN") {
+        if (error.data?.code === "FORBIDDEN") {
           router.push("/upgrade");
         }
       },
@@ -59,11 +59,11 @@ export const AgentForm = ({
 
   const updateAgent = useMutation(
     trpc.agents.update.mutationOptions({
-      onSuccess:async () => {
+      onSuccess: async () => {
         await queryClient.invalidateQueries(
-            trpc.agents.getMany.queryOptions({}),
+          trpc.agents.getMany.queryOptions({})
         );
-        if(initialValues?.id) {
+        if (initialValues?.id) {
           await queryClient.invalidateQueries(
             trpc.agents.getOne.queryOptions({ id: initialValues.id })
           );
@@ -80,8 +80,8 @@ export const AgentForm = ({
   const form = useForm<z.infer<typeof agentsInputSchema>>({
     resolver: zodResolver(agentsInputSchema),
     defaultValues: {
-      name: initialValues?.name ?? "",
-      instructions: initialValues?.instructions ?? "",
+      name: initialValues?.name || "",
+      instructions: initialValues?.instructions || "",
     },
   });
 
@@ -90,7 +90,7 @@ export const AgentForm = ({
 
   const onSubmit = (values: z.infer<typeof agentsInputSchema>) => {
     if (isEdit) {
-      updateAgent.mutate({ ...values, id: initialValues?.id! });
+      updateAgent.mutate({ ...values, id: initialValues.id });
     } else {
       createAgent.mutate(values);
     }
@@ -139,7 +139,7 @@ export const AgentForm = ({
               variant="ghost"
               disabled={isPending}
               type="button"
-              onClick={() => onCancel()}
+              onClick={() => onCancel()} 
             >
               Cancel
             </Button>

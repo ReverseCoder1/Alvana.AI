@@ -1,7 +1,6 @@
 import { ResponsiveDialog } from "@/components/responsive-dialog";
 import { MeetingForm } from "./meeting-form";
 import { MeetingGetOne } from "../../types";
-import { useState } from "react";
 interface UpdateMeetingDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
@@ -21,7 +20,7 @@ export const UpdateMeetingDialog = ({
       onOpenChange={onOpenChange}
     >
     <MeetingForm 
-        onSuccess={(id) => onOpenChange(false)}
+        onSuccess={() => onOpenChange(false)}
         onCancel={() => onOpenChange(false)}
         initialValues={initialValues}
     />

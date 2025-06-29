@@ -21,7 +21,6 @@ interface AgentIdViewHeaderProps {
     onRemove: () => void;
 }
 export const AgentIdViewHeader = ({
-    agentid,
     agentName,
     onEdit,
     onRemove
